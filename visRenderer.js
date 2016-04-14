@@ -255,7 +255,7 @@ function onlyUnique(value, index, self) { // This function returns an array with
 
         var pie = d3.layout.pie().sort(null).value(function(d) { return d.value; });
 
-        var svg = d3.select("body").append("svg")
+        var svg = d3.select(selector).append("svg")
                     .attr("width", width)
                     .attr("height", height)
                     .append("g")

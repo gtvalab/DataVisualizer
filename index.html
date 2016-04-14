@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="dataVisualizer.css">
 </head>
 <body>
+	X-axis: <select id='x-attr' class='axisselector'></select>
+	Y-axis: <select id='y-attr' class='axisselector'></select>
+	Chart: <select id='chart-type'>
+		<option value='bar'>Bar</option>
+		<option value='scatter'>Scatter</option>
+		<option value='line'>Line</option>
+		<option value='pie'>Pie</option>
+		</select>
 	<div id='vis'></div>
 </body>
 <script type="text/javascript" src='visRenderer.js'></script>
@@ -17,21 +25,52 @@
 <script type="text/javascript" src='DataProcessor.js'></script>
 <script type="text/javascript" src='xScaleGenerator.js'></script>
 <script type="text/javascript" src='yScaleGenerator.js'></script>
-
 <script type="text/javascript">
 	/*
 	d3.csv("data/cars.csv",function(data){
 		dataVisualizer.drawBarChart(data,'Type','Width',"#vis",600,400);
 	})	
  */
-
  	dataProcessor.processFile("data/cars.csv");
  	d3.csv("data/cars.csv",function(data){
- 		// dataProcessor.processList(data);
- 		// console.log(dataProcessor.getAttributeDetails());
-//		dataVisualizer.drawScatterplot(data,'Type','Cyl',"#vis",1000,700);
-        // dataVisualizer.drawPieChart(data,'Type','Retail Price',"#vis",600,400);
-        dataVisualizer.drawLineChart(data,'Retail Price','Cyl',"#vis",1000,700);
-	})
+	 	$('.axisselector').find('option').remove().end();
+	    $(".axisselector").append($("<option></option>").val('').html(''));
+	    $("#encoding-attribute-dropdown").append($("<option></option>").val('').html(''));
+	    var dataAttributes = Object.keys(data[0]);
+	    for(var i in dataAttributes){
+	        var dataAttribute = dataAttributes[i];
+	        $(".axisselector").append($("<option></option>").val(dataAttribute).html(dataAttribute));        
+	    }
+	});
+
+ 	
+ 	$(".axisselector").change(function(){ 		
+ 		updateChart();
+ 	});
+ 	$("#chart-type").change(function(){ 		
+ 		updateChart();
+ 	});
+
+ 	function updateChart(){
+ 		d3.csv("data/cars.csv",function(data){
+	 		// dataProcessor.processList(data);
+	 		// console.log(dataProcessor.getAttributeDetails());
+			// dataVisualizer.drawScatterplot(data,'Type','Cyl',"#vis",1000,700);
+	        // dataVisualizer.drawPieChart(data,'Type','Retail Price',"#vis",600,400);
+	        d3.select("#vis").selectAll("svg").remove();
+	        var chartType = $("#chart-type").val();
+	        var xAttr = $("#x-attr").val();
+	        var yAttr = $("#y-attr").val();
+	        if(chartType=="bar"){
+	        	dataVisualizer.drawBarChart(data,xAttr,yAttr,"#vis",600,400);
+	        }else if (chartType=="scatter"){
+	        	dataVisualizer.drawScatterplot(data,xAttr,yAttr,"#vis",600,400);
+	        }else if (chartType=="pie"){
+	        	dataVisualizer.drawPieChart(data,xAttr,yAttr,"#vis",600,400);
+	        }else if(chartType=="line"){
+	        	dataVisualizer.drawLineChart(data,xAttr,yAttr,"#vis",600,400);
+	        }	        
+		})
+ 	}
 </script>
 </html>
