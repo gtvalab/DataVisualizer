@@ -237,14 +237,15 @@ function onlyUnique(value, index, self) { // This function returns an array with
 
     };
 
-    visRenderer.drawVerticalBarChart = function(data,labels,selector,divWidth,divHeight){
+    visRenderer.drawPieChart = function(data,labels,selector,divWidth,divHeight){
 
         pdateTextSizes(divWidth,divHeight);
         var margin = {top: divHeight*0.1, right: divWidth*0.10, bottom: divHeight*0.15, left: divWidth*0.15},
             width = divWidth - margin.left - margin.right,
             height = divHeight - margin.top - margin.bottom;
 
-        
+
+
     };
 
 
