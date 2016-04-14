@@ -237,7 +237,7 @@ function onlyUnique(value, index, self) { // This function returns an array with
 
     };
 
-    visRenderer.drawPieChart = function(data,labels,selector,divWidth,divHeight){
+    visRenderer.drawVerticalPieChart = function(data,labels,selector,divWidth,divHeight){
 
         pdateTextSizes(divWidth,divHeight);
         var margin = {top: divHeight*0.1, right: divWidth*0.10, bottom: divHeight*0.15, left: divWidth*0.15},
@@ -255,8 +255,8 @@ function onlyUnique(value, index, self) { // This function returns an array with
             width = divWidth - margin.left - margin.right,
             height = divHeight - margin.top - margin.bottom;
 
-
-        if(checkAttributeType(labels.xAttr)=="Nominal")
+         //console.log("hellow ",dataProcessor.getAttributeDetails(labels.xAttr));
+        if(dataProcessor.getAttributeDetails(labels.xAttr)["isCategorical"]=="1")
         {
             var XExtentValue=[];
             for(i=0;i<data.length;i++)
@@ -275,7 +275,7 @@ function onlyUnique(value, index, self) { // This function returns an array with
          
 
 
-        if(checkAttributeType(labels.yAttr)=="Nominal")
+        if(dataProcessor.getAttributeDetails(labels.yAttr)["isCategorical"]=="1")
         {
             var YExtentValue=[];
             for(i=0;i<data.length;i++)
