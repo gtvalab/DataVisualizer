@@ -24,6 +24,17 @@
 		//console.log(dataProcessor.getAttributeDetails('Retail Price'));
 		visRenderer.drawScatterplot(transformedData,labels,selector,width,height);
 	}
+
+	dataVisualizer.drawLineChart = function(dataList,xLabelAttribute,yLabelAttribute,selector,width,height,transform){
+		d3.select(selector).selectAll("svg").remove();
+		var transformedData = dataTransformer.getLineChartData(dataList,xLabelAttribute,yLabelAttribute);
+		var labels = {
+			"xAttr" : xLabelAttribute,
+			"yAttr" : yLabelAttribute
+		};
+		//console.log(dataProcessor.getAttributeDetails('Retail Price'));
+		visRenderer.drawLineChart(transformedData,labels,selector,width,height);
+	}
   
     dataVisualizer.drawPieChart = function(dataList,labelAttribute,valueAttribute,selector,width,height,transform){
 		d3.select(selector).selectAll("svg").remove();

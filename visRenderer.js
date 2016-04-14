@@ -419,4 +419,115 @@ function onlyUnique(value, index, self) { // This function returns an array with
             .style('shape-rendering','crispEdges');
     };
 
+    visRenderer.drawLineChart = function(data,labels,selector,divWidth,divHeight){
+        updateTextSizes(divWidth,divHeight);
+        var margin = {top: divHeight*0.1, right: divWidth*0.30, bottom: divHeight*0.15, left: divWidth*0.15},
+            width = divWidth - margin.left - margin.right,
+            height = divHeight - margin.top - margin.bottom;
+
+         //console.log("hellow ",dataProcessor.getAttributeDetails(labels.xAttr));
+        if(dataProcessor.getAttributeDetails(labels.xAttr)["isCategorical"]=="1")
+        {
+            var XExtentValue=[];
+            for(i=0;i<data.length;i++)
+            {
+                 XExtentValue.push(data[i].xVal);
+            }
+            XExtentValue = XExtentValue.filter(onlyUnique);
+            var x= YScaleGenerator("ordinal", width, XExtentValue);
+        }
+        else
+        {
+            var XExtentValue ;
+            XExtentValue = d3.extent(data, function(d) { return d.xVal; });
+            var x = XScaleGenerator("linear", width, XExtentValue);
+        }
+         
+
+
+        if(dataProcessor.getAttributeDetails(labels.yAttr)["isCategorical"]=="1")
+        {
+            var YExtentValue=[];
+            for(i=0;i<data.length;i++)
+            {
+                 YExtentValue.push(data[i].yVal);
+            }
+            YExtentValue = YExtentValue.filter(onlyUnique);
+            var y= YScaleGenerator("ordinal", height, YExtentValue);
+        }
+        else
+        {
+            var YExtentValue ;
+            YExtentValue = d3.extent(data, function(d) { return d.yVal; });
+            var y = XScaleGenerator("linear", height, YExtentValue);
+        }
+
+        var valueline = d3.svg.line()
+            .x(function(d) { return x(d.xVal); })
+            .y(function(d) { return y(d.yVal); });        
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
+
+        var svg = d3.select(selector).append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            // .call(scatterplotTooltip);
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis)
+            .append('text')
+            .attr("y",margin.bottom*0.75)
+            .attr("x",width)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .style('font-size',labelFontSize)
+            .text(labels.xAttr);
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y",0 - (margin.left*0.75))
+            .attr("x",0-((height-margin.top-margin.bottom)/2))
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .style('font-size',labelFontSize)
+            .text(labels.yAttr);
+        
+        svg.append("path")
+            .attr("class", "line")
+            .attr("d", valueline(data))
+            .style("stroke", "steelblue")
+            .style('stroke-width',2)
+            .style("fill","none");
+        
+        // axes styling
+        svg.selectAll('.axis')
+            .style('font',''+tickFontSize+' sans-serif');
+
+        svg.selectAll('.tick')
+            .selectAll('text')
+            .style('font',''+tickFontSize+' sans-serif');
+
+        svg.selectAll('.axis path')
+            .style('fill','none')
+            .style('stroke','#000')
+            .style('shape-rendering','crispEdges');
+        svg.selectAll('.axis line')
+            .style('fill','none')
+            .style('stroke','#000')
+            .style('shape-rendering','crispEdges');
+    };
+
 })();

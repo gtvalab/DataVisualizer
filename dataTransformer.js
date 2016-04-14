@@ -54,5 +54,61 @@
         return transformedList;
 	}
 
+	dataTransformer.getLineChartData  = function(dataList,xAttr,yAttr,transform){
+        
+        var transformedList = [];
+		var labelValueMap = {};
+
+		for(var i in dataList){
+			var dataItem = dataList[i];
+            transformedList.push(
+			{	
+				"xVal": dataProcessor.getAttributeDetails(xAttr)["isCategorical"] == "1" ? dataItem[xAttr] : parseInt(dataItem[xAttr]),
+				"yVal": dataProcessor.getAttributeDetails(yAttr)["isCategorical"] == "1" ? dataItem[yAttr] : parseInt(dataItem[yAttr])
+			});			
+		}
+		sortObj(transformedList,'xVal');
+        return transformedList;
+	}
+
+	function sortObj(list, key,order) {
+	    order = typeof order !== 'undefined' ? order : 'a';
+	    function compare(a, b) {
+	        a = a[key];
+	        b = b[key];
+	        var type = (typeof(a) === 'string' || typeof(b) === 'string') ? 'string' : 'number';
+	        var result;
+	        if (type === 'string'){
+	            if(key=='startDate' || key=='endDate'){
+	                a = new Date(a).getTime();
+	                b = new Date(b).getTime();
+	                if(order=='a'){
+	                    result = a - b;
+	                }else if(order=='d'){
+	                    result = b - a;
+	                }
+	                //if(order=='a'){
+	                //    result = a < b;
+	                //}else if(order=='d'){
+	                //    result = a > b;
+	                //}
+	            }else{
+	                if(order=='a'){
+	                    result = a.localeCompare(b);
+	                }else if(order=='d'){
+	                    result = b.localeCompare(a);
+	                }
+	            }
+	        } else {
+	            if(order=='a'){
+	                result = a - b;
+	            }else if(order=='d'){
+	                result = b - a;
+	            }
+	        }
+	        return result;
+	    }
+    	return list.sort(compare);
+	}	
 
 })();

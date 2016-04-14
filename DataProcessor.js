@@ -16,8 +16,10 @@
                 for(var attribute in attributeMap){
                     if(isNaN(d[attribute])){
                         attributeMap[attribute]['isCategorical'] = '1';
+                        attributeMap[attribute]['isNumeric'] = '0';
                     }else{
                         attributeMap[attribute]['isNumeric'] = '1';
+                        attributeMap[attribute]['isCategorical'] = '0';
                     }
                     attributeMap[attribute]['domain'].push(d[attribute]);
                 }
@@ -48,8 +50,10 @@
                 for(var attribute in attributeMap){
                     if(isNaN(d[attribute])){
                         attributeMap[attribute]['isCategorical'] = '1';
+                        attributeMap[attribute]['isNumeric'] = '1';
                     }else{
                         attributeMap[attribute]['isNumeric'] = '1';
+                        attributeMap[attribute]['isCategorical'] = '0';
                     }
                     attributeMap[attribute]['domain'].push(d[attribute]);
                 }
