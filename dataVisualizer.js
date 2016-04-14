@@ -21,6 +21,7 @@
 			"xAttr" : xLabelAttribute,
 			"yAttr" : yLabelAttribute
 		};
+		console.log(dataProcessor.getAttributeDetails('Retail Price'));
 		visRenderer.drawScatterplot(transformedData,labels,selector,width,height);
 	}	
 })();

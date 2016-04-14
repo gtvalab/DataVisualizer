@@ -14,16 +14,21 @@
 <script type="text/javascript" src='visRenderer.js'></script>
 <script type="text/javascript" src='dataTransformer.js'></script>
 <script type="text/javascript" src='dataVisualizer.js'></script>
+<script type="text/javascript" src='DataProcessor.js'></script>
 <script type="text/javascript" src='xScaleGenerator.js'></script>
 <script type="text/javascript" src='checkAttributeType.js'></script>
 <script type="text/javascript" src='yScaleGenerator.js'></script>
+
 <script type="text/javascript">
 	/*
 	d3.csv("data/cars.csv",function(data){
 		dataVisualizer.drawBarChart(data,'Type','Width',"#vis",600,400);
 	})	
  */
-	d3.csv("data/cars.csv",function(data){
+ 	dataProcessor.processFile("data/cars.csv");
+ 	d3.csv("data/cars.csv",function(data){
+ 		// dataProcessor.processList(data);
+ 		// console.log(dataProcessor.getAttributeDetails());
 		dataVisualizer.drawScatterplot(data,'Width','Retail Price',"#vis",1000,700);
 	})
 </script>
