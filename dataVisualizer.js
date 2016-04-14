@@ -21,7 +21,18 @@
 			"xAttr" : xLabelAttribute,
 			"yAttr" : yLabelAttribute
 		};
-		console.log(dataProcessor.getAttributeDetails('Retail Price'));
+		//console.log(dataProcessor.getAttributeDetails('Retail Price'));
 		visRenderer.drawScatterplot(transformedData,labels,selector,width,height);
-	}	
+	}
+  
+    dataVisualizer.drawPieChart = function(dataList,labelAttribute,valueAttribute,selector,width,height,transform){
+		d3.select(selector).selectAll("svg").remove();
+		var transformedData = dataTransformer.getBarChartData(dataList,labelAttribute,valueAttribute);
+			var labels = {
+			"xAttr" : labelAttribute,
+			"yAttr" : valueAttribute
+		};
+		visRenderer.drawPieChart(transformedData,labels,selector,width,height);
+	}
+
 })();

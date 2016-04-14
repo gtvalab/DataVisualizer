@@ -2,7 +2,7 @@
 	dataTransformer = {};
 
 	dataTransformer.getBarChartData = function(dataList,labelAttr,valueAttr,transform){
-		transform = typeof transform !== 'undefined' ? transform : "AVG";
+		transform = typeof transform !== 'undefined' ? transform : "AVERAGE";
 		
 		var transformedList = [];
 		var labelValueMap = {};
@@ -23,7 +23,7 @@
 			}
 		}
 
-		if(transform=="AVG"){
+		if(transform=="AVERAGE"){
 			for(var labelVal in labelValueMap){
 				transformedList.push({
 					"label":labelVal,
@@ -40,18 +40,19 @@
         
         var transformedList = [];
 		var labelValueMap = {};
+
 		for(var i in dataList){
 			var dataItem = dataList[i];
-			transformedList.push({
-					"xVal": parseInt(dataItem[xAttr]),
-					"label": dataItem["Name"],
-					"yVal": dataItem[yAttr]
+            transformedList.push(
+			{	
+				"xVal": dataProcessor.getAttributeDetails(xAttr)["isCategorical"] == "1" ? dataItem[xAttr] : parseInt(dataItem[xAttr]),
+				"label": dataItem["Name"],
+			    "yVal": dataProcessor.getAttributeDetails(yAttr)["isCategorical"] == "1" ? dataItem[yAttr] : parseInt(dataItem[yAttr])
 			});
+			
 		}
-		console.log(transformedList);
         return transformedList;
 	}
-
 
 
 })();
