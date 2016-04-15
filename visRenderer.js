@@ -284,8 +284,7 @@ function onlyUnique(value, index, self) { // This function returns an array with
             width = divWidth - margin.left - margin.right,
             height = divHeight - margin.top - margin.bottom;
 
-         //console.log("hellow ",dataProcessor.getAttributeDetails(labels.xAttr));
-        if(dataProcessor.getAttributeDetails(labels.xAttr)["isCategorical"]=="1")
+        if(dataProcessor.getAttributeDetails(labels.xAttr)["isCategorical"]=="1" && dataProcessor.getAttributeDetails(labels.xAttr)["isNumeric"]=="0")
         {
             var XExtentValue=[];
             for(i=0;i<data.length;i++)
@@ -293,18 +292,19 @@ function onlyUnique(value, index, self) { // This function returns an array with
                  XExtentValue.push(data[i].xVal);
             }
             XExtentValue = XExtentValue.filter(onlyUnique);
-            var x= YScaleGenerator("ordinal", width, XExtentValue);
+            var x= YScaleGenerator("ordinal", width, XExtentValue);            
         }
         else
         {
-            var XExtentValue ;
-            XExtentValue = d3.extent(data, function(d) { return d.xVal; });
-            var x = XScaleGenerator("linear", width, XExtentValue);
+            // var XExtentValue ;
+            // XExtentValue = d3.extent(data, function(d) { return parseFloat(d.xVal); });
+            // var x = XScaleGenerator("linear", width, XExtentValue);
+            var x = d3.scale.linear().range([0, width]);
+            x.domain(d3.extent(data, function(d) { return parseFloat(d.xVal); })).nice();
         }
          
 
-
-        if(dataProcessor.getAttributeDetails(labels.yAttr)["isCategorical"]=="1")
+        if(dataProcessor.getAttributeDetails(labels.yAttr)["isCategorical"]=="1" && dataProcessor.getAttributeDetails(labels.yAttr)["isNumeric"]=="0")
         {
             var YExtentValue=[];
             for(i=0;i<data.length;i++)
@@ -312,17 +312,16 @@ function onlyUnique(value, index, self) { // This function returns an array with
                  YExtentValue.push(data[i].yVal);
             }
             YExtentValue = YExtentValue.filter(onlyUnique);
-            var y= YScaleGenerator("ordinal", height, YExtentValue);
+            var y= YScaleGenerator("ordinal", height, YExtentValue);            
         }
         else
         {
-            var YExtentValue ;
-            YExtentValue = d3.extent(data, function(d) { return d.yVal; });
-            var y = XScaleGenerator("linear", height, YExtentValue);
+            // var YExtentValue ;
+            // YExtentValue = d3.extent(data, function(d) { return parseFloat(d.yVal); });
+            // var y = XScaleGenerator("linear", height, YExtentValue);
+            var y = d3.scale.linear().range([height, 0]);
+            y.domain(d3.extent(data, function(d) { return parseFloat(d.yVal); })).nice();
         }
-
-        console.log(width, height, YExtentValue);
-        
 
         var color = d3.scale.category10();
 
@@ -425,8 +424,7 @@ function onlyUnique(value, index, self) { // This function returns an array with
             width = divWidth - margin.left - margin.right,
             height = divHeight - margin.top - margin.bottom;
 
-         //console.log("hellow ",dataProcessor.getAttributeDetails(labels.xAttr));
-        if(dataProcessor.getAttributeDetails(labels.xAttr)["isCategorical"]=="1")
+        if(dataProcessor.getAttributeDetails(labels.xAttr)["isCategorical"]=="1" && dataProcessor.getAttributeDetails(labels.xAttr)["isNumeric"]=="0")
         {
             var XExtentValue=[];
             for(i=0;i<data.length;i++)
@@ -434,18 +432,19 @@ function onlyUnique(value, index, self) { // This function returns an array with
                  XExtentValue.push(data[i].xVal);
             }
             XExtentValue = XExtentValue.filter(onlyUnique);
-            var x= YScaleGenerator("ordinal", width, XExtentValue);
+            var x= YScaleGenerator("ordinal", width, XExtentValue);            
         }
         else
         {
-            var XExtentValue ;
-            XExtentValue = d3.extent(data, function(d) { return d.xVal; });
-            var x = XScaleGenerator("linear", width, XExtentValue);
+            // var XExtentValue ;
+            // XExtentValue = d3.extent(data, function(d) { return parseFloat(d.xVal); });
+            // var x = XScaleGenerator("linear", width, XExtentValue);
+            var x = d3.scale.linear().range([0, width]);
+            x.domain(d3.extent(data, function(d) { return parseFloat(d.xVal); })).nice();
         }
          
 
-
-        if(dataProcessor.getAttributeDetails(labels.yAttr)["isCategorical"]=="1")
+        if(dataProcessor.getAttributeDetails(labels.yAttr)["isCategorical"]=="1" && dataProcessor.getAttributeDetails(labels.yAttr)["isNumeric"]=="0")
         {
             var YExtentValue=[];
             for(i=0;i<data.length;i++)
@@ -453,13 +452,15 @@ function onlyUnique(value, index, self) { // This function returns an array with
                  YExtentValue.push(data[i].yVal);
             }
             YExtentValue = YExtentValue.filter(onlyUnique);
-            var y= YScaleGenerator("ordinal", height, YExtentValue);
+            var y= YScaleGenerator("ordinal", height, YExtentValue);            
         }
         else
         {
-            var YExtentValue ;
-            YExtentValue = d3.extent(data, function(d) { return d.yVal; });
-            var y = XScaleGenerator("linear", height, YExtentValue);
+            // var YExtentValue ;
+            // YExtentValue = d3.extent(data, function(d) { return parseFloat(d.yVal); });
+            // var y = XScaleGenerator("linear", height, YExtentValue);
+            var y = d3.scale.linear().range([height, 0]);
+            y.domain(d3.extent(data, function(d) { return parseFloat(d.yVal); })).nice();
         }
 
         var valueline = d3.svg.line()
