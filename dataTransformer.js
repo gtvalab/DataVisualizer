@@ -59,14 +59,37 @@
         var transformedList = [];
 		var labelValueMap = {};
 
-		for(var i in dataList){
-			var dataItem = dataList[i];
-            transformedList.push(
-			{	
-				"xVal": dataProcessor.getAttributeDetails(xAttr)["isCategorical"] == "1" ? dataItem[xAttr] : parseInt(dataItem[xAttr]),
-				"yVal": dataProcessor.getAttributeDetails(yAttr)["isCategorical"] == "1" ? dataItem[yAttr] : parseInt(dataItem[yAttr])
-			});			
-		}
+		if(dataProcessor.getAttributeDetails(xAttr)["isNumeric"]=="1" && dataProcessor.getAttributeDetails(yAttr)["isNumeric"]=="1"){
+			for(var i in dataList){
+				var dataItem = dataList[i];
+	            var xVal = parseInt(dataItem[xAttr]);
+	            var yVal = parseInt(dataItem[yAttr]);
+	            if(xVal in labelValueMap){
+					labelValueMap[xVal]['valueSum'] += yVal;
+					labelValueMap[xVal]['count'] += 1;
+	            }else{
+	            	labelValueMap[xVal] = {
+	            		"valueSum":yVal,
+	            		"count":1
+	            	}
+	            }
+			}
+			for(var xVal in labelValueMap){
+				transformedList.push({
+					"xVal":xVal,
+					"yVal":labelValueMap[xVal]["valueSum"]*1.0/labelValueMap[xVal]["count"]
+				});
+			}
+		}else{
+			for(var i in dataList){
+				var dataItem = dataList[i];
+	            transformedList.push(
+				{	
+					"xVal": dataProcessor.getAttributeDetails(xAttr)["isCategorical"] == "1" ? dataItem[xAttr] : parseInt(dataItem[xAttr]),
+					"yVal": dataProcessor.getAttributeDetails(yAttr)["isCategorical"] == "1" ? dataItem[yAttr] : parseInt(dataItem[yAttr])
+				});
+			}
+		}	
 		sortObj(transformedList,'xVal');
         return transformedList;
 	}
