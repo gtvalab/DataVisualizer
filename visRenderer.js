@@ -27,6 +27,13 @@ function onlyUnique(value, index, self) { // This function returns an array with
         return displayStr;
     });
 
+    var pieChartTooltip = d3.tip().attr('class', 'd3-tip').html(function(d) {
+        var displayStr = "";
+        displayStr += "<strong>Label:</strong> <span style='color:gold'>" + d.data.label + "</span><br/>";
+        displayStr += "<strong>Value:</strong> <span style='color:gold'>" + d.value + "</span>";
+        return displayStr; 
+    });
+
     var labelFontSizeMap = {
         "xs":"6px",
         "s":"8px",
@@ -259,7 +266,8 @@ function onlyUnique(value, index, self) { // This function returns an array with
                     .attr("width", width)
                     .attr("height", height)
                     .append("g")
-                    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+                    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+                    .call(pieChartTooltip);
 
 
         var g = svg.selectAll(".arc")
@@ -268,7 +276,7 @@ function onlyUnique(value, index, self) { // This function returns an array with
                    .append("g")
                    .attr("class", "arc");
 
-        g.append("path").attr("d", arc).style("fill", function(d) { return color(d.data.label); });
+        g.append("path").attr("d", arc).style("fill", function(d) { return color(d.data.label); }).on("mouseover",pieChartTooltip.show).on("mouseout",pieChartTooltip.hide);
 
         g.append("text").attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
                         .attr("dy", ".23em")
