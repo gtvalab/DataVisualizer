@@ -159,7 +159,7 @@ function onlyUnique(value, index, self) { // This function returns an array with
             width = divWidth - margin.left - margin.right,
             height = divHeight - margin.top - margin.bottom;
 
-        var color = d3.scale.category10();
+        var color = d3.scale.category20();
 
         var x = d3.scale.ordinal()
             .rangeRoundBands([0, width], .1);
@@ -219,7 +219,7 @@ function onlyUnique(value, index, self) { // This function returns an array with
             .attr("y", function(d) { return y(d.value); })
             .attr("height", function(d) { return height - y(d.value); })
             .attr("fill",function(d){
-                return color(d.category);
+                return color(d.label);
             })
             .on('mouseover', barTooltip.show)
             .on('mouseout', barTooltip.hide);
