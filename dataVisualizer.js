@@ -11,7 +11,7 @@
 			"xAttr" : labelAttribute,
 			"yAttr" : valueAttribute
 		};
-		visRenderer.drawVerticalBarChart(transformedData,labels,selector,width,height);
+		visRenderer.drawVerticalBarChart([{"label":"a","value":10},{"label":"b","value":-20},{"label":"c","value":30}],labels,selector,width,height);
 	}	
 
 	dataVisualizer.drawScatterplot = function(dataList,xLabelAttribute,yLabelAttribute,selector,width,height,transform){

@@ -51,6 +51,8 @@
  		updateChart();
  	});
 
+ 	var divWidth = 300, divHeight = 600;
+
  	function updateChart(){
  		d3.csv("data/cars.csv",function(data){
 	 		// dataProcessor.processList(data);
@@ -62,13 +64,13 @@
 	        var xAttr = $("#x-attr").val();
 	        var yAttr = $("#y-attr").val();
 	        if(chartType=="bar"){
-	        	dataVisualizer.drawBarChart(data,xAttr,yAttr,"#vis",1000,600);
+	        	dataVisualizer.drawBarChart(data,xAttr,yAttr,"#vis",divWidth,divHeight);
 	        }else if (chartType=="scatter"){
-	        	dataVisualizer.drawScatterplot(data,xAttr,yAttr,"#vis",1000,600);
+	        	dataVisualizer.drawScatterplot(data,xAttr,yAttr,"#vis",divWidth,divHeight);
 	        }else if (chartType=="pie"){
-	        	dataVisualizer.drawPieChart(data,xAttr,yAttr,"#vis",1000,600);
+	        	dataVisualizer.drawPieChart(data,xAttr,yAttr,"#vis",divWidth,divHeight);
 	        }else if(chartType=="line"){
-	        	dataVisualizer.drawLineChart(data,xAttr,yAttr,"#vis",1000,600);
+	        	dataVisualizer.drawLineChart(data,xAttr,yAttr,"#vis",divWidth,divHeight);
 	        }	        
 		})
  	}

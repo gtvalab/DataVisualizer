@@ -184,7 +184,7 @@ function onlyUnique(value, index, self) { // This function returns an array with
             .call(barTooltip);
 
         x.domain(data.map(function(d) { return d.label; }));
-        y.domain([0, d3.max(data, function(d) { return d.value; })]);
+        y.domain([d3.min(data, function(d) { return d.value; }), d3.max(data, function(d) { return d.value; })]);
 
         svg.append("g")
             .attr("class", "x axis")

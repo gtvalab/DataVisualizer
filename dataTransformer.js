@@ -12,7 +12,7 @@
 			var labelAttrVal = dataItem[labelAttr];
 			var valueAttrVal = dataItem[valueAttr];
 
-			if(Object.keys(labelValueMap).indexOf(labelVal)==-1){ // encountering label for first time
+			if(Object.keys(labelValueMap).indexOf(labelAttrVal)==-1){ // encountering label for first time
 				labelValueMap[labelAttrVal] = {
 					"valueSum":parseFloat(valueAttrVal),
 					"count":1
