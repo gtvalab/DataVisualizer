@@ -9,7 +9,7 @@
 		for(var i in dataList){
 			//console.log(i, dataList[i], labelAttr, valueAttr);
 			var dataItem = dataList[i];
-			var labelAttrVal = dataItem[labelAttr];
+			var labelAttrVal = "" + dataItem[labelAttr];
 			var valueAttrVal = dataItem[valueAttr];
 
 			if(Object.keys(labelValueMap).indexOf(labelAttrVal)==-1){ // encountering label for first time
